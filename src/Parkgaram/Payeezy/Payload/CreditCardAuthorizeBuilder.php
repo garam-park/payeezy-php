@@ -10,9 +10,13 @@ class CreditCardAuthorizeBuilder {
   private $card_number;
   private $exp_date;
   private $cvv;
+  private $transaction_type;
+  private $method;
 
   public function __construct($merchant_ref='') {
        $this->merchant_ref = $merchant_ref;
+       $this->method = "credit_card";
+       $this->transaction_type = "authorize";
   }
 
   static public function init($merchant_ref='')
@@ -56,8 +60,13 @@ class CreditCardAuthorizeBuilder {
 
   public function setType($value='')
   {
-    $this->cardholder_name = $value;
+    $this->type = $value;
     return $this;
+  }
+
+  public function getType()
+  {
+    return $this->type;
   }
 
   public function setCardHolderName($value='')
@@ -66,10 +75,20 @@ class CreditCardAuthorizeBuilder {
     return $this;
   }
 
+  public function getCardHolderName()
+  {
+    return $this->cardholder_name;
+  }
+
   public function setCardNumber($value='')
   {
     $this->card_number = $value;
     return $this;
+  }
+
+  public function getCardNumber()
+  {
+    return $this->card_number;
   }
 
   public function setExpDate($value='')
@@ -78,9 +97,42 @@ class CreditCardAuthorizeBuilder {
     return $this;
   }
 
+  public function getExpDate()
+  {
+    return $this->exp_date;
+  }
+
   public function setCvv($value='')
   {
     $this->cvv = $value;
     return $this;
+  }
+
+  public function getCvv()
+  {
+    return $this->cvv;
+  }
+
+  public function build()
+  {
+    $payload = array(
+        'merchant_ref' => self::trim($this->merchant_ref),
+        'method' => self::trim($this->method),
+        'transaction_type' => self::trim($this->transaction_type),
+        'amount' => self::trim($this->amount),
+        'currency_code' => self::trim($this->currency_code),
+        'credit_card' => array(
+            'type' => self::trim($this->type),
+            'cvv' => self::trim($this->cvv),
+            'cardholder_name' => self::trim($this->cardholder_name),
+            'card_number' => self::trim($this->card_number),
+            'exp_date' => self::trim($this->exp_date),
+        ),
+    );
+    return $payload;
+  }
+
+  private static function trim($data) {
+      return htmlspecialchars(stripslashes(trim($data)));
   }
 }
