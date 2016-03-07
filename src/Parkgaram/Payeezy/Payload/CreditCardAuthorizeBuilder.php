@@ -129,7 +129,7 @@ class CreditCardAuthorizeBuilder {
             'exp_date' => self::trim($this->exp_date),
         ),
     );
-    return $payload;
+    return json_encode($payload, JSON_FORCE_OBJECT);
   }
 
   private static function trim($data) {
