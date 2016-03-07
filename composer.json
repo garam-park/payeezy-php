@@ -1,0 +1,18 @@
+{
+    "name": "parkgaram/payeeazy-php",
+    "description": "This is payeezy library for laravel",
+    "type": "library",
+    "require": {
+        "illuminate/database": "~5.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "garam",
+            "email": "netgarng88@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"Parkgaram\\": "src/Parkgaram"}
+    }
+}
